@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+# bin/compile <build-dir> <cache-dir>
+
+set -e
+
+`dirname $0`/../nodejs-bin/compile "$@"
+`dirname $0`/../php-bin/compile "$@"
