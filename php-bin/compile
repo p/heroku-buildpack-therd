@@ -22,6 +22,7 @@ cd $BUILD_DIR
 
 # move app things to www
 mkdir -p $CACHE_DIR/www
+ls *
 mv * $CACHE_DIR/www
 mv $CACHE_DIR/www .
 
