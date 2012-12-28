@@ -20,15 +20,16 @@ shopt -s dotglob
 
 cd $BUILD_DIR
 
+if false; then
 # move app things to www
 mkdir -p $CACHE_DIR/www
-ls *
 mv * $CACHE_DIR/www
 mv $CACHE_DIR/www .
 
 # keep Procfile
 if [ -f www/Procfile ]; then
   mv www/Procfile .
+fi
 fi
 
 APACHE_URL="https://s3.amazonaws.com/php-lp/apache-$APACHE_VERSION.tar.gz"
