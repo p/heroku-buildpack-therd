@@ -3,5 +3,7 @@
 
 set -e
 
-`dirname $0`/../nodejs-bin/compile "$@"
+# php compile moves everything to app/www;
+# run it first to ensure this does not affect node.js bits
 `dirname $0`/../php-bin/compile "$@"
+`dirname $0`/../nodejs-bin/compile "$@"
