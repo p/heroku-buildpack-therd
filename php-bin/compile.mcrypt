@@ -1,0 +1,29 @@
+#!/bin/sh
+
+# Borrowed from
+# https://raw.github.com/iphoting/heroku-buildpack-php-tyler/master/bin/compile
+
+S3_BUCKET=heroku-buildpack-php-tyler
+S3_URL="https://s3.amazonaws.com/${S3_BUCKET}"
+
+LIBMCRYPT_VERSION=2.5.8
+MCRYPT_FILE="libmcrypt-${LIBMCRYPT_VERSION}.tar.gz"
+MCRYPT_URL="${S3_URL}/${MCRYPT_FILE}"
+
+# libmcrypt
+echo "-----> Installing libmcrypt"
+if [ -f "${MCRYPT_FILE}" ]
+then
+	if check_md5 "${MCRYPT_FILE}"
+	then
+		echo "Bundling libmcrypt v${LIBMCRYPT_VERSION}" | indent
+		download_url $MCRYPT_URL
+	else
+		echo "Using cached libmcrypt v${LIBMCRYPT_VERSION}" | indent
+	fi
+else
+	echo "Bundling libmcrypt v${LIBMCRYPT_VERSION}" | indent
+	download_url $MCRYPT_URL
+fi
+
+tar xzf ${MCRYPT_FILE} -C ${BUILD_DIR}/local
