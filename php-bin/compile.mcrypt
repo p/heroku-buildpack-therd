@@ -53,4 +53,5 @@ else
 	download_url $MCRYPT_URL
 fi
 
+mkdir -p ${BUILD_DIR}/local
 tar xzf ${MCRYPT_FILE} -C ${BUILD_DIR}/local
