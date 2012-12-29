@@ -10,6 +10,33 @@ LIBMCRYPT_VERSION=2.5.8
 MCRYPT_FILE="libmcrypt-${LIBMCRYPT_VERSION}.tar.gz"
 MCRYPT_URL="${S3_URL}/${MCRYPT_FILE}"
 
+function indent() {
+  c='s/^/       /'
+  case $(uname) in
+    Darwin) sed -l "$c";;
+    *)      sed -u "$c";;
+  esac
+}
+	function check_md5() {
+SUMS_FILE="${BUNDLE_DIR}/${MANIFEST_FILE}"
+TARGET="$1"
+SUM=`cat "${SUMS_FILE}" | grep "${TARGET}" | cut -d ' ' -f 1`
+OUTPUT=`md5sum ${BUNDLE_DIR}/${TARGET} | cut -d ' ' -f 1`
+! [ "$SUM" = "$OUTPUT" ]
+}
+
+function download_url() {
+TARGET_URL="$1"
+curl -s -S -O -L -m 300 --connect-timeout 60 "$TARGET_URL"
+}
+
+BIN_DIR=$(dirname $0)
+BUILD_DIR=$1
+CACHE_DIR=$2
+BUNDLE_DIR="${CACHE_DIR}/bundles"
+LP_DIR=`cd $(dirname $0); cd ..; pwd`
+export COMPOSER_HOME="${CACHE_DIR}/.composer"
+
 # libmcrypt
 echo "-----> Installing libmcrypt"
 if [ -f "${MCRYPT_FILE}" ]
