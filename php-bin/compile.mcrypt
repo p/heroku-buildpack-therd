@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 # Borrowed from
 # https://raw.github.com/iphoting/heroku-buildpack-php-tyler/master/bin/compile
